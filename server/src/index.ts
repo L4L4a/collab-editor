@@ -37,4 +37,34 @@ async function start() {
   });
 }
 
+app.post('/ai', async (req, res) => {
+  const { code, action } = req.body;
+
+  const prompt = action === 'explain'
+    ? `Explain what this code does in simple terms:\n\n${code}`
+    : `Fix any bugs in this code and return the corrected version with a brief explanation:\n\n${code}`;
+
+  try {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama-3.1-8b-instant',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 500,
+      }),
+    });
+
+    const data = await response.json() as any;
+    const result = data.choices[0].message.content;
+    res.json({ result });
+  } catch (err) {
+    console.error('ai route error:', err);
+    res.status(500).json({ error: 'ai request failed' });
+  }
+});
+
 start();
