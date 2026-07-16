@@ -50,20 +50,13 @@ On top of that, there's an AI layer powered by Groq that can explain what your c
 ---
 
 ## Architecture
-┌─────────────────────┐        ┌──────────────────────┐
-│   React Client      │        │   Express Server      │
-│                     │        │                       │
-│  Monaco Editor  ────┼──────▶ │   Socket.IO           │
-│  Socket.IO client   │        │   /ai endpoint        │
-│  UserPresence       │◀───────┼─                      │
-└─────────────────────┘        └──────────┬────────────┘
+
+The app uses a **pub/sub model** via Redis to keep all connected users in sync — even across multiple server instances.
+
+Client A  ──▶  Socket.IO Server  ──▶  Redis (publish)
 │
-┌───────────▼────────────┐
-│   Redis                 │
-│                         │
-│  pub/sub (code-update)  │
-│  room state persistence │
-└─────────────────────────┘
+▼
+Client B  ◀──  Socket.IO Server  ◀──  Redis (subscribe)
 
 When a user types, the change is:
 1. Emitted to the server via Socket.IO
