@@ -12,6 +12,8 @@
 [![Socket.io](https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white)](https://socket.io/)
 [![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
 
+**[🚀 Live Demo](https://codeshare-ek.netlify.app)**
+
 </div>
 
 ---
@@ -102,6 +104,8 @@ Open `http://localhost:5173`, enter a room ID and your name — share the room I
 ---
 
 ## Demo
+
+**Live at:** [codeshare-ek.netlify.app](https://codeshare-ek.netlify.app)
 
 > Enter any room ID → share it → code together in real time.
 
