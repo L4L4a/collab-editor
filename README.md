@@ -52,12 +52,12 @@ On top of that, there's an AI layer powered by Groq that can explain what your c
 ## Architecture
 
 The app uses a **pub/sub model** via Redis to keep all connected users in sync — even across multiple server instances.
-
+```
 Client A  ──▶  Socket.IO Server  ──▶  Redis (publish)
-│
-▼
+                                            │
+                                            ▼
 Client B  ◀──  Socket.IO Server  ◀──  Redis (subscribe)
-
+```
 When a user types, the change is:
 1. Emitted to the server via Socket.IO
 2. Saved to Redis under `room:{id}:code`
